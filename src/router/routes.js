@@ -1,13 +1,6 @@
 
 const routes = [
   {
-    path: '/',
-    component: () => import('layouts/MyLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Index.vue') }
-    ]
-  },
-  {
     path: '/consultas',
     component: () => import('pages/HistoricoConsultas.vue')
   },
@@ -16,8 +9,8 @@ const routes = [
     component: () => import('pages/Alarme.vue')
   },
   {
-    path: '/home',
-    component: () => import('pages/Home.vue')
+    path: '/',
+    component: () => import('pages/Index.vue')
   },
   {
     path: '/remedios',

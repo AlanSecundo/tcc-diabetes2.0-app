@@ -44,6 +44,7 @@ module.exports = function (ctx) {
       components: [
         'QCard',
         'QCardTitle',
+        'QDatetime',
         'QLayout',
         'QInput',
         'QLayoutHeader',
@@ -59,6 +60,7 @@ module.exports = function (ctx) {
         'QIcon',
         'QList',
         'QListHeader',
+        'QModal',
         'QItem',
         'QItemMain',
         'QItemSide',

@@ -1,5 +1,6 @@
 import axios from 'axios'
 
-export default ({ Vue }) => {
-  Vue.prototype.$axios = axios
-}
+axios.defaults.baseURL = 'http://diabetes20.herokuapp.com'
+axios.defaults.headers.common['token'] = window.localStorage.getItem('token')
+
+export default axios

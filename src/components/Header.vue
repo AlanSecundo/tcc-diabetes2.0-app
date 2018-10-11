@@ -1,7 +1,7 @@
 <template>
     <div class="header">
       <div>
-        <q-btn flat style="color: blue;" icon="keyboard_backspace" to="/home"/>
+        <q-btn flat style="color: blue;" icon="keyboard_backspace" to="/"/>
         <span id="name-header">{{nameScreen}}</span>
       </div>
       <q-btn flat style="color: grey;" icon="remove_red_eye"/>

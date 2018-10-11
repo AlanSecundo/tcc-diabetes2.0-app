@@ -16,7 +16,29 @@
         <span style="margin-left: 2vw;">60 dias para próxima medição</span>
       </div>
     </q-card>
-    <q-btn round color="blue-8" class="fixed" icon="add" style="right: 18px; bottom: 18px;"/>
+    <q-btn round color="blue-8" class="fixed" @click="modal = true" icon="add" style="right: 18px; bottom: 18px;"/>
+
+    <q-modal v-model="modal" minimized>
+        <div class="modal-header">
+          <span>Cadastrar Hemoglobina</span>
+        </div>
+        <div style="padding: 5%;">
+          <q-input v-model="objetoHemoglobina.valor" float-label="Valor da hemoglobina"/>
+          <q-datetime v-model="objetoHemoglobina.dataUltimaMedicao" float-label="Data da medição" format="MM/DD/YYYY"/>
+          <div class="row buttons" style="padding-top: 10%">
+            <div class="col-6">
+              <q-btn color="orange" flat @click="modal = false" label="Fechar"/>
+            </div>
+            <div class="col-6" style="text-align: right;">
+              <q-btn label="Cadastrar" color="orange" @click="postHemoglobina()"/>
+            </div>
+          </div>
+        </div>
+      </q-modal>
+    {{getHemoglobina}}
+    <div v-for="hemoglobina in getHemoglobina" :key="hemoglobina.id">
+    {{hemoglobina.valor}}
+    </div>
   </div>
 </template>
 
@@ -31,7 +53,9 @@ export default {
   },
   data () {
     return {
+      modal: false,
       name: 'Hemoglobina glicada',
+      dataUltimaMedicao: '',
       chartData: [
         ['Mês', 'Sales'],
         ['Janeiro', 150],
@@ -43,7 +67,31 @@ export default {
           title: 'Company Performance',
           subtitle: 'Sales, Expenses, and Profit: 2014-2017'
         }
+      },
+      objetoHemoglobina: {
+        valor: '',
+        dataUltimaMedicao: ''
       }
+    }
+  },
+  created () {
+    this.$store.dispatch('getHemoglobina')
+    this.tratarDados()
+  },
+  computed: {
+    getHemoglobina () {
+      return this.$store.getters.getHemoglobinas
+    }
+  },
+  methods: {
+    postHemoglobina () {
+      this.$store.dispatch('postHemoglobina', this.objetoHemoglobina)
+      this.modal = false
+    },
+    tratarDados () {
+      this.dataUltimaMedicao = this.getHemoglobina.dataUltimaMedicao
+      let tamanho = this.getHemoglobina.length
+      console.log(tamanho)
     }
   }
 }

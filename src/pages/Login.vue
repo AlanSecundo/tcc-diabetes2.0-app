@@ -6,7 +6,7 @@
     <div class="form">
       <q-input color="white" v-model="identificador" type="text" float-label="Usuário" :before="[{icon: 'mail', handler () {}}]"/>
       <q-input color="white" v-model="senha" type="password" float-label="Senha" :before="[{icon: 'lock', handler () {}}]"/>
-      <q-btn class="btn" to="/home">Entrar</q-btn>
+      <q-btn class="btn" @click="login()">Entrar</q-btn>
       <div class="password text-center">
         <q-btn flat color="white">Esqueceu sua senha?</q-btn>
       </div>
@@ -19,10 +19,28 @@
 
 <script>
 export default {
+  name: 'login',
   data () {
     return {
       identificador: '',
       senha: ''
+    }
+  },
+  methods: {
+    login () {
+      let json = {
+        identificador: this.identificador,
+        senha: this.senha
+      }
+      this.$store.dispatch('login', json)
+    }
+  },
+  created () {
+    window.localStorage.clear('token')
+  },
+  computed: {
+    getLogin () {
+      return this.$store.getters.getLogin
     }
   }
 }
