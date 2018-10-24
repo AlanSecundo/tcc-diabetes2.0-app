@@ -43,6 +43,14 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    setAlarm (time) {
+      cordova.plugins.notification.local.schedule({
+        title: 'Design team meeting',
+        trigger: { in: time, unit: 'second' }
+      })
+    }
   }
 }
 </script>

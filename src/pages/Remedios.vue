@@ -4,7 +4,6 @@
     <q-card class="card">
       <div class="header-card">
         <span id="title">Remédios</span>
-        <q-select id="filter" inverted v-model="select" float-label="Filtro" radio :options="selectOptions"/>
       </div>
       <div class="timeline">
         <q-timeline responsive color="secondary">
@@ -20,7 +19,25 @@
         </q-timeline>
       </div>
     </q-card>
-    <q-btn round color="blue-8" class="fixed" icon="add" style="right: 18px; bottom: 18px;"/>
+    <q-btn round color="blue-8" class="fixed" icon="add" style="right: 18px; bottom: 18px;" @click="opened = true"/>
+    <q-modal v-model="opened" position="left">
+      <div class="padding">
+        <div class="text-center">
+          <q-icon size="2rem" color="blue" name="local_hospital" />
+          <span>Cadastro de remédio</span>
+        </div>
+        <div>
+          <q-input float-label="Nome" v-model="nameMedicine" />
+          <q-input float-label="Composição" v-model="composition"/>
+          <q-datetime color="purple" v-model="date" type="datetime" float-label="Data da primeira dose" />
+          <q-datetime color="purple" v-model="date" type="date" float-label="Último dia do remédio" />
+        </div>
+        <div class="space-between">
+          <q-btn flat color="primary" @click="opened = false" label="Fechar"/>
+          <q-btn label="Salvar" color="green" @click="createMedicine"/>
+        </div>
+      </div>
+    </q-modal>
   </div>
 </template>
 
@@ -34,17 +51,19 @@ export default {
   data () {
     return {
       name: 'Remédios',
-      select: '',
-      selectOptions: [
-        {
-          label: 'Todas',
-          value: 'goog'
-        },
-        {
-          label: 'Mês',
-          value: 'fb'
-        }
-      ]
+      opened: false,
+      nameMedicine: '',
+      composition: '',
+      date: '',
+      select: ''
+    }
+  },
+  methods: {
+    createMedicine () {
+      cordova.plugins.notification.local.schedule({
+        title: 'Design team meeting',
+        trigger: { in: 10, unit: 'second' }
+      })
     }
   }
 }
@@ -72,6 +91,15 @@ export default {
 }
 .button{
   margin-top: 2vh;
+}
+.padding{
+  padding: 1rem;
+}
+.space-between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
 #filter{
   height: 7vh;

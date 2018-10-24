@@ -62,7 +62,9 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
-        'QSelect'
+        'QSelect',
+        'QModal',
+        'QDatetime'
       ],
       directives: [
         'Ripple'

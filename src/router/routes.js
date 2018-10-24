@@ -4,33 +4,10 @@ const routes = [
     path: '/',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Home.vue') },
+      { path: 'consultas', component: () => import('pages/HistoricoConsultas.vue') }
     ]
   },
-  {
-    path: '/consultas',
-    component: () => import('pages/HistoricoConsultas.vue')
-  },
-  {
-    path: '/alarmes',
-    component: () => import('pages/Alarme.vue')
-  },
-  {
-    path: '/home',
-    component: () => import('pages/Home.vue')
-  },
-  {
-    path: '/remedios',
-    component: () => import('pages/Remedios.vue')
-  },
-  {
-    path: '/hemoglobina',
-    component: () => import('pages/Hemoglobina.vue')
-  },
-  {
-    path: '/login',
-    component: () => import('pages/Login.vue')
-  }
 ]
 
 // Always leave this as last one
