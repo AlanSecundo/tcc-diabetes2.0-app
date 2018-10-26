@@ -3,22 +3,22 @@
     <d-header :nameScreen="name"/>
     <q-card class="card">
       <div class="header-card">
-        <span id="title">Média da hemoglobina glicada</span>
+        <span id="title">Últimas taxas de hemoglobina glicada</span>
       </div>
       <div>
         <GChart type="LineChart" :data="chartData" :options="chartOptions"/>
       </div>
       <div>
-        <span> <b>Última medição:</b> 08/08/2018</span>
+        <span> <b>Última medição:</b> {{getHemoglobina[getHemoglobina.length - 1].dataUltimaMedicao.split('T')[0].split('-').reverse().join('/')}}</span>
       </div>
       <div class="flex-row">
         <q-icon size="6vw" name="notification_important" />
-        <span style="margin-left: 2vw;">60 dias para próxima medição</span>
+        <span style="margin-left: 2vw;"></span>
       </div>
     </q-card>
     <q-btn round color="blue-8" class="fixed" @click="modal = true" icon="add" style="right: 18px; bottom: 18px;"/>
 
-    <q-modal v-model="modal" minimized>
+    <q-modal v-model="modal">
         <div class="modal-header">
           <span>Cadastrar Hemoglobina</span>
         </div>
@@ -35,9 +35,7 @@
           </div>
         </div>
       </q-modal>
-    {{getHemoglobina}}
-    <div v-for="hemoglobina in getHemoglobina" :key="hemoglobina.id">
-    {{hemoglobina.valor}}
+    <div v-for="hemoglobina in getHemoglobina" :key="hemoglobina.id.value">
     </div>
   </div>
 </template>
@@ -57,10 +55,10 @@ export default {
       name: 'Hemoglobina glicada',
       dataUltimaMedicao: '',
       chartData: [
-        ['Mês', 'Sales'],
-        ['Janeiro', 150],
-        ['Fevereiro', 100],
-        ['Março', 200]
+        ['Mês', 'Hemoglobina'],
+        ['Janeiro', 0],
+        ['Fevereiro', 0],
+        ['Março', 0]
       ],
       chartOptions: {
         chart: {

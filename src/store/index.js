@@ -3,6 +3,10 @@ import Vuex from 'vuex'
 
 import hemoglobina from './modules/Hemoglobina'
 import login from './modules/Login'
+import usuario from './modules/Usuario'
+import consultas from './modules/Consultas'
+import remedios from './modules/Remedios'
+import alarme from './modules/Alarme'
 
 Vue.use(Vuex)
 
@@ -15,7 +19,11 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       login,
-      hemoglobina
+      hemoglobina,
+      usuario,
+      consultas,
+      remedios,
+      alarme
     }
   })
 

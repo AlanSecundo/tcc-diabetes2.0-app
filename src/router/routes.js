@@ -10,11 +10,15 @@ const routes = [
   },
   {
     path: '/',
-    component: () => import('pages/Index.vue')
+    component: () => import('pages/Home.vue')
   },
   {
     path: '/remedios',
     component: () => import('pages/Remedios.vue')
+  },
+  {
+    path: '/cadastro',
+    component: () => import('pages/Cadastro.vue')
   },
   {
     path: '/hemoglobina',

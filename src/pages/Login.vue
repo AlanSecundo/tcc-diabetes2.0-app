@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout id="main">
     <div class="box-logo shadow-3">
       <img src="../assets/logo.png" height="100vh" width="140vw">
     </div>
@@ -11,7 +11,7 @@
         <q-btn flat color="white">Esqueceu sua senha?</q-btn>
       </div>
       <q-layout-footer class="footer text-center no-shadow">
-        <span>Não possui cadastro ainda? <a style="color:orange" href="/register">Registre-se</a> </span>
+        <span>Não possui cadastro ainda? <a style="color:orange" href="/cadastro">Registre-se</a> </span>
       </q-layout-footer>
     </div>
   </q-layout>
@@ -46,9 +46,10 @@ export default {
 }
 </script>
 
-<style>
-body{
-  background: linear-gradient(120deg, #8fc9e4 0%, #7199da 100%)
+<style scoped>
+#main{
+  background: linear-gradient(120deg, #8fc9e4 0%, #7199da 100%);
+  --q-color-light: white;
 }
 .box-logo{
   padding-top: 6vh;

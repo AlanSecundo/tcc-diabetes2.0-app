@@ -1,8 +1,9 @@
 <template>
-  <q-layout class="main">
+<transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+  <q-layout  v-bind:style="{fontSize: size + '%' }">
     <div class="header">
       <q-btn flat style="color: grey;" icon="view_headline" @click="drawer = !drawer"/>
-      <q-btn flat style="color: grey;" icon="remove_red_eye"/>
+      <q-btn flat style="color: grey;" icon="remove_red_eye" @click="fontFunction"/>
     </div>
     <div class="box-logo">
       <img src="../assets/logo.png" height="100vh" width="140vw">
@@ -10,29 +11,30 @@
     <div class="text-center title">
       <span>Informações gerais</span>
     </div>
-    <div style="margin-left: 5vw; margin-right: 5vw; margin-top: 2vh; opacity: 0.9;">
-      <div class="box-info row text-center">
-        <div class="box-box col-6 bg-deep-purple-12">
-          <span class="box-title"> Última média da hemoglobina glicada</span>
-          <h3><b>7,33%</b></h3>
-        </div>
-        <div class="box-box col-6 bg-indigo-12">
-          <span class="box-title">Próxima consulta</span>
-          <span style="margin-top: 4vh;">Segunda-feira</span>
-          <h3 style="margin-top:0;"> <b> 10/09 </b></h3>
-        </div>
-      </div>
-      <div class="box-info row text-center">
-        <div class="box-box col-6 bg-indigo-12">
-          <span class="box-title">Remédio diário</span>
-          <h4> <b>2 restantes </b></h4>
-        </div>
-        <div class="box-box col-6 bg-deep-purple-12">
-          <span class="box-title">Dica do dia</span>
-          <span id="dica"><b>Diga não ao sedentarismo</b></span>
-          <q-btn flat>Saiba mais</q-btn>
-        </div>
-      </div>
+    <div>
+      <GChart type="LineChart" :data="chartData"/>
+    </div>
+    <div>
+      <q-carousel class="text-center" infinite :autoplay="5000" color="transparent" height="30vh">
+      <q-carousel-slide style="font-size: 90%;">
+        <p><b>Aprenda sobre a doença</b></p>
+        <span>
+          É preciso saber que o diabetes não é uma sentença de morte. Pelo contrário! Seguindo as recomendações para deixar os níveis de glicose controlados, a vida continua normalmente.
+        </span>
+      </q-carousel-slide>
+      <q-carousel-slide style="font-size: 90%;">
+        <p><b>Diga não ao sedentarismo!</b></p>
+        <span>
+          A atividade física é essencial no tratamento do diabetes para manter os níveis de açúcar no sangue controlados. A prática deve ser realizadas de três a cinco vezes na semana.
+        </span>
+      </q-carousel-slide>
+      <q-carousel-slide style="font-size: 90%;">
+        <p><b>Aprenda sobre a doença</b></p>
+        <span>
+          É preciso saber que o diabetes não é uma sentença de morte. Pelo contrário! Seguindo as recomendações para deixar os níveis de glicose controlados, a vida continua normalmente.
+        </span>
+      </q-carousel-slide>
+    </q-carousel>
     </div>
       <q-layout-footer class="footer no-shadow text-center" >
         <div class="row">
@@ -55,16 +57,45 @@
         </div>
       </q-layout-footer>
       <q-layout-drawer v-model="drawer" side="left">
-        <q-btn to="/login">Sair</q-btn>
+        <q-btn to="/login" @click="window.localStorage.clear('token')">Sair</q-btn>
       </q-layout-drawer>
   </q-layout>
+</transition>
 </template>
 
 <script>
+import { GChart } from 'vue-google-charts'
 export default {
+  components: {
+    GChart
+  },
   data () {
     return {
-      drawer: false
+      drawer: false,
+      size: 100,
+      chartData: [
+        ['Mês', 'Hemoglobina'],
+        ['Janeiro', 0],
+        ['Fevereiro', 0],
+        ['Março', 0]
+      ]
+    }
+  },
+  computed: {
+    getHemoglobina () {
+      return this.$store.getters.getHemoglobinas
+    }
+  },
+  methods: {
+    fontFunction () {
+      if (this.size === 100) {
+        this.size = 110
+      } else if (this.size === 110) {
+        this.size = 120
+      } else if (this.size === 120) {
+        this.size = 100
+      }
+      console.log(this.size)
     }
   }
 }
@@ -76,6 +107,20 @@ export default {
   height: 100vh;
   font-family: 'Nunito', sans-serif;
   background: white;
+  font-size: 100%;
+   /* background: linear-gradient(120deg, #c2e9fb 0%, #a1c4fd 100%); */
+}
+.main1{
+  height: 100vh;
+  font-size: 120%;
+  font-family: 'Nunito', sans-serif;
+  background: white;
+   /* background: linear-gradient(120deg, #c2e9fb 0%, #a1c4fd 100%); */
+}
+.main2{
+  height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  background: white;
    /* background: linear-gradient(120deg, #c2e9fb 0%, #a1c4fd 100%); */
 }
 .header{
@@ -84,6 +129,7 @@ export default {
   justify-content: space-between;
 }
 .box-logo{
+  padding-top: 0vh;
   margin: 0vh 5vw 0 5vw;
   display: flex;
   flex-direction: column;

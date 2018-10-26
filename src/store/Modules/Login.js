@@ -7,14 +7,17 @@ export default {
   },
   actions: {
     login ({ dispatch, commit }, json) {
-      axios.post('/api/login', {
+      Loading.show()
+      axios.post('/login', {
         identificador: json.identificador,
         senha: json.senha
       })
         .then(res => {
+          console.log(res)
           window.localStorage.setItem('token', res.data)
           axios.defaults.headers.common['token'] = res.data
           commit('setToken', res.data)
+          Loading.hide()
           this.$router.push('/')
         }).catch(err => {
           console.log(err)
