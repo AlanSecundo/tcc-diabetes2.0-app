@@ -22,7 +22,7 @@
           <q-input color="info" v-model="confirmaSenha" float-label="Confirme sua senha" type="password"/>
           <q-stepper-navigation class="on-right on-left row justify-around" style="padding-top: 5%">
             <div class="col-6">
-              <q-btn label="Cancelar" color="info" flat to="/" />
+              <q-btn label="Cancelar" color="info" flat to="/home" />
             </div>
             <div class="col-6" style="text-align: right;">
               <q-btn label="Continuar" color="info" @click="validarSenha"/>

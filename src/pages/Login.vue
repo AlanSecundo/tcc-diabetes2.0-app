@@ -1,18 +1,24 @@
 <template>
-  <q-layout id="main">
+  <q-layout view="lhr Lpr lfr" id="main">
     <div class="box-logo shadow-3">
       <img src="../assets/logo.png" height="100vh" width="140vw">
     </div>
     <div class="form">
-      <q-input color="white" v-model="identificador" type="text" float-label="Usuário" :before="[{icon: 'mail', handler () {}}]"/>
-      <q-input color="white" v-model="senha" type="password" float-label="Senha" :before="[{icon: 'lock', handler () {}}]"/>
+      <div class="row-input">
+        <q-input class="input" inverted v-model="identificador" type="text" float-label="Usuário" :before="[{icon: 'mail', handler () {}}]"/>
+      </div>
+      <div class="row-input">
+        <q-input class="input" inverted v-model="senha" type="password" float-label="Senha" :before="[{icon: 'lock', handler () {}}]"/>
+      </div>
       <q-btn class="btn" @click="login()">Entrar</q-btn>
       <div class="password text-center">
         <q-btn flat color="white">Esqueceu sua senha?</q-btn>
       </div>
-      <q-layout-footer class="footer text-center no-shadow">
-        <span>Não possui cadastro ainda? <a style="color:orange" href="/cadastro">Registre-se</a> </span>
-      </q-layout-footer>
+      <div class="text-center" style="margin-top: 17vh">
+        <div>
+          <span style="color: #f8f8f8;">Não possui cadastro ainda? </span><q-btn flat style="color:orange" to="/cadastro">Registre-se</q-btn>
+        </div>
+      </div>
     </div>
   </q-layout>
 </template>
@@ -51,6 +57,9 @@ export default {
   background: linear-gradient(120deg, #8fc9e4 0%, #7199da 100%);
   --q-color-light: white;
 }
+.row-input {
+  border-bottom: 1px solid white;
+}
 .box-logo{
   padding-top: 6vh;
   display: flex;
@@ -77,5 +86,11 @@ export default {
 }
 .q-if-label, .q-if-addon, .q-if-control {
   color: white;
+}
+.input {
+  box-shadow: none;
+}
+.bg-primary {
+  background: transparent !important;
 }
 </style>

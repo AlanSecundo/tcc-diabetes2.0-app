@@ -44,11 +44,6 @@ export default {
       })
       .catch (err => {
         console.log(err)
-        Notify.create({
-          message: 'Houve um erro ao buscar suas consultas',
-          type: 'negative',
-          position: 'top'
-        })
       })
     }
   },

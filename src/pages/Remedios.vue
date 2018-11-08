@@ -1,6 +1,6 @@
 <template>
   <div class="main" v-bind:style="{fontSize: size + '%' }">
-    <d-header :nameScreen="name"/>
+    <d-header :nameScreen="name"  v-on:upSize="fontFunction"/>
     <q-card class="card">
       <div class="header-card">
         <span id="title">Remédios</span>
@@ -58,6 +58,7 @@ export default {
   data () {
     return {
       name: 'Remédios',
+      size: 100,
       nome: '',
       open: false,
       composicao: '',
@@ -95,6 +96,15 @@ export default {
     this.$store.dispatch('getRemedios')
   },
   methods: {
+    fontFunction () {
+      if (this.size === 100) {
+        this.size = 110
+      } else if (this.size === 110) {
+        this.size = 120
+      } else if (this.size === 120) {
+        this.size = 100
+      }
+    },
     createMedicine () {
       cordova.plugins.notification.local.schedule({
         title: 'Design team meeting',
@@ -111,6 +121,8 @@ export default {
         descricao: this.lembrete
       }
       this.$store.dispatch('postRemedio', json)
+      this.criarAlarmeCordova()
+      this.zerarModal()
     },
     zerarModal () {
       this.open = false

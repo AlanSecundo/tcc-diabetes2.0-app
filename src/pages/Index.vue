@@ -55,7 +55,7 @@
         </div>
       </q-layout-footer>
       <q-layout-drawer v-model="drawer" side="left">
-        <q-btn to="/login">Sair</q-btn>
+        <q-btn to="/">Sair</q-btn>
       </q-layout-drawer>
   </q-layout>
 </template>

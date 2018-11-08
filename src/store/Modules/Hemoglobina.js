@@ -1,34 +1,35 @@
 import axios from '../../plugins/axios'
-import { Notify } from 'quasar'
+import { date, Notify } from 'quasar'
 
 export default {
   state: {
-    hemoglobinas: []
+    glicoses: []
   },
   actions: {
-    getHemoglobina ({ commit }, page) {
+    getGlicose ({ commit }, page) {
       axios.get('/glicose')
         .then(res => {
-          commit('setHemoglobina', res.data)
+          console.log(res.data)
+          commit('setGlicose', res.data)
         })
         .catch(err => {
           console.log(err)
         })
     },
-    postHemoglobina ({dispatch}, json) {
-      console.log(json)
+    postGlicose ({dispatch}, json) {
       axios.post('/glicose', {
         dataUltimaMedicao: json.dataUltimaMedicao,
-        nome: 0,
         valor: json.valor
       })
         .then(res => {
           console.log(res)
+          dispatch('getGlicose')
           Notify.create({
             message: 'Hemoglobina cadastrada com sucesso!',
             position: 'top',
             color: 'positive'
           })
+          this.$router.push('/home')
         })
         .catch(err => {
           console.log(err)
@@ -41,13 +42,18 @@ export default {
     }
   },
   mutations: {
-    setHemoglobina (state, data) {
-      state.hemoglobinas = data
+    setGlicose (state, data) {
+      state.glicoses = data
+      state.glicoses.forEach(item => {
+        let dataFormatada = date.formatDate(item.dataUltimaMedicao, 'YYYY-MM-DD')
+        let arrayData = dataFormatada.split('-', 3)
+        item.dataUltimaMedicao = arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0]
+      })
     }
   },
   getters: {
-    getHemoglobinas: (state) => {
-      return state.hemoglobinas
+    getGlicoses: (state) => {
+      return state.glicoses
     }
   }
 }

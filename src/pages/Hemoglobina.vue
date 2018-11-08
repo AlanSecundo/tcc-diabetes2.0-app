@@ -1,46 +1,45 @@
 <template>
-  <div class="main">
-    <d-header :nameScreen="name"/>
+  <div class="main" v-bind:style="{fontSize: size + '%' }">
+    <d-header :nameScreen="name"  v-on:upSize="fontFunction"/>
     <q-card class="card">
       <div class="header-card">
-        <span id="title">Últimas taxas de hemoglobina glicada</span>
+        <span id="title">Média da hemoglobina glicada</span>
       </div>
       <div>
-        <GChart type="LineChart" :data="chartData" :options="chartOptions"/>
+        <GChart v-if="haveData" type="LineChart" :data="chartData" :options="chartOptions"/>
       </div>
       <div>
-        <span> <b>Última medição:</b> {{getHemoglobina[getHemoglobina.length - 1].dataUltimaMedicao.split('T')[0].split('-').reverse().join('/')}}</span>
+        <span> <b>Última medição:</b> {{maiorData}}</span>
       </div>
       <div class="flex-row">
-        <q-icon size="6vw" name="notification_important" />
-        <span style="margin-left: 2vw;"></span>
+        <!-- <q-icon size="6vw" name="notification_important" />
+        <span style="margin-left: 2vw;">60 dias para próxima medição</span> -->
       </div>
     </q-card>
     <q-btn round color="blue-8" class="fixed" @click="modal = true" icon="add" style="right: 18px; bottom: 18px;"/>
 
-    <q-modal v-model="modal">
+    <q-modal v-model="modal" minimized>
         <div class="modal-header">
           <span>Cadastrar Hemoglobina</span>
         </div>
         <div style="padding: 5%;">
           <q-input v-model="objetoHemoglobina.valor" float-label="Valor da hemoglobina"/>
-          <q-datetime v-model="objetoHemoglobina.dataUltimaMedicao" float-label="Data da medição" format="MM/DD/YYYY"/>
+          <q-datetime v-model="objetoHemoglobina.dataUltimaMedicao" float-label="Data da medição" format="DD/MM/YYYY"/>
           <div class="row buttons" style="padding-top: 10%">
             <div class="col-6">
               <q-btn color="orange" flat @click="modal = false" label="Fechar"/>
             </div>
             <div class="col-6" style="text-align: right;">
-              <q-btn label="Cadastrar" color="orange" @click="postHemoglobina()"/>
+              <q-btn label="Cadastrar" color="orange" @click="postGlicose()"/>
             </div>
           </div>
         </div>
       </q-modal>
-    <div v-for="hemoglobina in getHemoglobina" :key="hemoglobina.id.value">
-    </div>
   </div>
 </template>
 
 <script>
+/*eslint-disable */
 import dHeader from '../components/Header.vue'
 import { GChart } from 'vue-google-charts'
 
@@ -53,17 +52,13 @@ export default {
     return {
       modal: false,
       name: 'Hemoglobina glicada',
-      dataUltimaMedicao: '',
-      chartData: [
-        ['Mês', 'Hemoglobina'],
-        ['Janeiro', 0],
-        ['Fevereiro', 0],
-        ['Março', 0]
-      ],
+      size: 100,
+      maiorData: '',
+      haveData: false,
+      chartData: [],
       chartOptions: {
         chart: {
-          title: 'Company Performance',
-          subtitle: 'Sales, Expenses, and Profit: 2014-2017'
+          title: 'Glicose'
         }
       },
       objetoHemoglobina: {
@@ -72,24 +67,47 @@ export default {
       }
     }
   },
+  watch: {
+    haveData: function (haveData) {
+
+    }
+  },
   created () {
-    this.$store.dispatch('getHemoglobina')
+    this.$store.dispatch('getGlicose')
     this.tratarDados()
   },
   computed: {
-    getHemoglobina () {
-      return this.$store.getters.getHemoglobinas
+    getGlicose () {
+      //eslint
+      if (this.$store.getters.getGlicoses.length > 0){
+        this.haveData = true
+      }
+      return this.$store.getters.getGlicoses
     }
   },
   methods: {
-    postHemoglobina () {
-      this.$store.dispatch('postHemoglobina', this.objetoHemoglobina)
+    fontFunction () {
+      if (this.size === 100) {
+        this.size = 110
+      } else if (this.size === 110) {
+        this.size = 120
+      } else if (this.size === 120) {
+        this.size = 100
+      }
+    },
+    postGlicose () {
+      this.$store.dispatch('postGlicose', this.objetoHemoglobina)
       this.modal = false
     },
     tratarDados () {
-      this.dataUltimaMedicao = this.getHemoglobina.dataUltimaMedicao
-      let tamanho = this.getHemoglobina.length
-      console.log(tamanho)
+      let tamanho = this.getGlicose.length
+      this.maiorData = this.getGlicose[tamanho - 1].dataUltimaMedicao
+      let array = []
+      array.push(['Data', 'Valor'])
+      this.getGlicose.forEach(function (value) {
+        array.push([value.dataUltimaMedicao, value.valor])
+      })
+      this.chartData = array
     }
   }
 }

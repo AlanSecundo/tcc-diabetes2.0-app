@@ -27,7 +27,7 @@ export default {
             type: 'positive',
             position: 'top'
           })
-          this.$router.push('/login')
+          this.$router.push('/')
           Loading.hide()
 
         })

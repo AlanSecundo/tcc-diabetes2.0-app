@@ -1,10 +1,9 @@
 <template>
-  <div class="main">
-    <d-header :nameScreen="name"/>
+  <div class="main" v-bind:style="{fontSize: size + '%' }">
+    <d-header :nameScreen="name"  v-on:upSize="fontFunction"/>
     <q-card class="card">
       <div class="header-card">
         <span id="title">Alarmes</span>
-        <q-select id="filter" inverted v-model="select" float-label="Filtro" radio :options="selectOptions"/>
       </div>
       <div class="alarm" v-for="alarme in getAlarmes" :key="alarme.id.value">
         <div class="text-center" style="width: 100%;">
@@ -41,6 +40,7 @@ export default {
     return {
       name: 'Alarmes',
       select: '',
+      size: 100,
       selectOptions: [
         {
           label: 'Consultas',
@@ -69,6 +69,17 @@ export default {
       let alarmes = this.getConsultas.concat(this.getRemedios)
       console.log(alarmes)
       return alarmes
+    }
+  },
+  methods: {
+    fontFunction () {
+      if (this.size === 100) {
+        this.size = 110
+      } else if (this.size === 110) {
+        this.size = 120
+      } else if (this.size === 120) {
+        this.size = 100
+      }
     }
   }
 }

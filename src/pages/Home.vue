@@ -57,7 +57,7 @@
         </div>
       </q-layout-footer>
       <q-layout-drawer v-model="drawer" side="left">
-        <q-btn to="/login" @click="window.localStorage.clear('token')">Sair</q-btn>
+        <q-btn to="/" @click="window.localStorage.clear('token')">Sair</q-btn>
       </q-layout-drawer>
   </q-layout>
 </transition>
@@ -75,9 +75,9 @@ export default {
       size: 100,
       chartData: [
         ['Mês', 'Hemoglobina'],
-        ['Janeiro', 0],
-        ['Fevereiro', 0],
-        ['Março', 0]
+        ['Janeiro', 10],
+        ['Fevereiro', 50],
+        ['Março', 20]
       ]
     }
   },
@@ -95,7 +95,6 @@ export default {
       } else if (this.size === 120) {
         this.size = 100
       }
-      console.log(this.size)
     }
   }
 }
@@ -147,8 +146,6 @@ export default {
   font-size: 2.5vh;
 }
 .footer{
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
   margin: 2vw 2vh 2vw 2vh;
 }

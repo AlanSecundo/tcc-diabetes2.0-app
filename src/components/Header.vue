@@ -1,10 +1,10 @@
 <template>
     <div class="header">
       <div>
-        <q-btn flat style="color: blue;" icon="keyboard_backspace" to="/"/>
+        <q-btn flat style="color: blue;" icon="keyboard_backspace" to="/home"/>
         <span id="name-header">{{nameScreen}}</span>
       </div>
-      <q-btn flat style="color: grey;" icon="remove_red_eye"/>
+      <q-btn flat style="color: grey;" icon="remove_red_eye"  v-on:click="upSize"/>
     </div>
 </template>
 
@@ -18,6 +18,11 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  methods: {
+    upSize () {
+      this.$emit('upSize')
     }
   }
 }

@@ -47,11 +47,6 @@ export default {
       })
       .catch (err => {
         console.log(err)
-        Notify.create({
-          message: 'Houve um erro ao buscar seu histórico de remédios',
-          type: 'negative',
-          position: 'top'
-        })
       })
     }
   },

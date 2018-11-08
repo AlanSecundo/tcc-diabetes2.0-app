@@ -1,6 +1,6 @@
 <template>
-  <div class="main">
-    <d-header :nameScreen="name"/>
+  <div class="main" v-bind:style="{fontSize: size + '%' }">
+    <d-header :nameScreen="name"  v-on:upSize="fontFunction"/>
     <q-card class="card">
       <div class="header-card">
         <span id="title">Consultas</span>
@@ -51,6 +51,7 @@ export default {
       medico: '',
       nome: '',
       select: '',
+      size: 100,
       selectOptions: [
         {
           label: 'Todas',
@@ -72,6 +73,15 @@ export default {
     this.$store.dispatch('getConsultas')
   },
   methods: {
+    fontFunction () {
+      if (this.size === 100) {
+        this.size = 110
+      } else if (this.size === 110) {
+        this.size = 120
+      } else if (this.size === 120) {
+        this.size = 100
+      }
+    },
     postConsulta () {
       let json = {
         data: this.alarme,
@@ -79,7 +89,7 @@ export default {
         medico: this.medico,
         nome: this.nome
       }
-      this.criarAlarmeCordova()
+      // this.criarAlarmeCordova()
       this.$store.dispatch('postConsulta', json)
       this.zerarModal()
     },

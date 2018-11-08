@@ -18,7 +18,7 @@ export default {
           axios.defaults.headers.common['token'] = res.data
           commit('setToken', res.data)
           Loading.hide()
-          this.$router.push('/')
+          this.$router.push('/home')
         }).catch(err => {
           console.log(err)
           Notify.create({
