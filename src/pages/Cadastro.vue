@@ -31,7 +31,7 @@
         </q-step>
         <q-step title="Step 2">
           <div>
-            <q-datetime color="info" v-model="dataNascimento" float-label="Data de nascimento" type="date" />
+            <q-datetime color="info" v-model="dataNascimento" float-label="Data de nascimento" type="date" format="DD/MM/YYYY" />
             <q-input color="info" v-model="peso" float-label="Peso" suffix="KG" type="number" />
             <q-input color="info" v-model="altura" float-label="Altura" suffix="Metros" type="number" />
             <q-select color="info" v-model="selectSexo" :options="sexo" float-label="Genêro" />

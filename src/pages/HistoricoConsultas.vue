@@ -26,7 +26,7 @@
         </div>
       </div>
       <div style="padding: 1.4rem;">
-        <q-datetime v-model="alarme" float-label="Datada Consulta" type="datetime" :before="[{icon: 'alarm_on', handler () {}}]" />
+        <q-datetime v-model="alarme" float-label="Data e horário da Consulta" type="datetime" :before="[{icon: 'alarm_on', handler () {}}]" format="DD/MM/YYYY MM:SS"/>
         <q-input color="primary" v-model="local" :before="[{icon: 'room', handler () {}}]" float-label="Local"/>
         <q-input color="primary" v-model="medico" :before="[{icon: 'face', handler () {}}]" float-label="Medico"/>
         <q-input color="primary" v-model="nome" :before="[{icon: 'local_hospital', handler () {}}]" float-label="Considerações do médico"/>

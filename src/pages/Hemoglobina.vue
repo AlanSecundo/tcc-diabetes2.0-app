@@ -69,7 +69,6 @@ export default {
   },
   watch: {
     haveData: function (haveData) {
-
     }
   },
   created () {
@@ -78,7 +77,7 @@ export default {
   },
   computed: {
     getGlicose () {
-      //eslint
+      // eslint
       if (this.$store.getters.getGlicoses.length > 0){
         this.haveData = true
       }

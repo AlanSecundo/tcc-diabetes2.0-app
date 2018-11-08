@@ -29,7 +29,7 @@ export default {
             position: 'top',
             color: 'positive'
           })
-          this.$router.push('/home')
+          dispatch('getGlicose')
         })
         .catch(err => {
           console.log(err)

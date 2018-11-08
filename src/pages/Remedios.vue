@@ -15,11 +15,11 @@
               <span><b>Composição:</b> ácido esteárico, amido, crospovidona, povidona, estearato de magnésio, hipromelose, macrogol</span>
             </div>
           </q-timeline-entry> -->
-          <q-timeline-entry v-for="remedio in getRemedios" :key="remedio.nome" :title="remedio.nome" :subtitle="'Ínicio em ' + remedio.inicio" side="left">
-            <div>
+          <q-timeline-entry v-for="remedio in getRemedios" :key="remedio.nome" :title="remedio.nome" :subtitle="'Início em ' + remedio.inicio" side="left">
+            <div class="row">
               <span> <b>Dose:</b> De {{remedio.periodicidade}} em {{remedio.periodicidade}} horas.</span>
-              <br>
-              <br>
+              </div>
+              <div class="row">
               <span><b>Composição:</b> {{remedio.composicao}}</span>
             </div>
           </q-timeline-entry>
@@ -40,8 +40,8 @@
           <q-input float-label="Nome" v-model="nome" />
           <q-select color="info" v-model="periodicidade" :options="valores" float-label="De quanto em quanto tempo?" />
           <q-input float-label="Composição" v-model="composicao"/>
-          <q-datetime v-model="dataInicio" type="datetime" float-label="Data da primeira dose" />
-          <q-datetime v-model="dataFim" type="date" float-label="Último dia do remédio" />
+          <q-datetime v-model="dataInicio" type="datetime" float-label="Data e horário da primeira dose" format="DD/MM/YYYY MM:SS"/>
+          <q-datetime v-model="dataFim" type="date" float-label="Data da última dose" format="DD/MM/YYYY"/>
           <q-input float-label="Lembretes sobre a medicação" v-model="lembrete"/>
         </div>
     </q-modal>
@@ -96,6 +96,9 @@ export default {
     this.$store.dispatch('getRemedios')
   },
   methods: {
+    zerarModal () {
+      this.open = false
+    },
     fontFunction () {
       if (this.size === 100) {
         this.size = 110
@@ -121,11 +124,8 @@ export default {
         descricao: this.lembrete
       }
       this.$store.dispatch('postRemedio', json)
-      this.criarAlarmeCordova()
       this.zerarModal()
-    },
-    zerarModal () {
-      this.open = false
+      this.criarAlarmeCordova()
     },
     criarAlarmeCordova () {
       let data = this.formatarData()
