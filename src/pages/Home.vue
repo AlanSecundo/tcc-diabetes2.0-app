@@ -57,7 +57,30 @@
         </div>
       </q-layout-footer>
       <q-layout-drawer v-model="drawer" side="left">
-        <q-btn to="/" @click="window.localStorage.clear('token')">Sair</q-btn>
+        <div>
+          <img width="100%" height="30%" src="https://image.freepik.com/fotos-gratis/estetoscopio-medico-ou-phonendoscope-isolado-no-fundo-branco-recortado-estetoscopio-e-prancheta-com-folha-de-papel-em-branco-e-espaco-para-copia-conceito-medico_1391-748.jpg" alt="">
+          <div style="margin-top: -17%; margin-left: 7px;" >
+            <span>
+              <b>{{getUsuario.nomeCompleto}}</b>
+            </span>
+            <span>
+              {{getUsuario.email}}
+            </span>
+          </div>
+        </div>
+        <div style="margin-top: 10%;">
+          <!-- <p> <b>Telefone:</b> ({{getUsuario.telefone.substring(0,2)}}) {{getUsuario.telefone.substring(2,7)}}-{{getUsuario.telefone.substring(7,12)}}</p>
+          <p> <b>Sexo:</b> {{getUsuario.sexo}}</p>
+          <p> <b>Localização:</b> {{getUsuario.cidade}}/{{getUsuario.estado}}</p> -->
+          <q-btn icon="alarm_on" to="/alarmes" align="left" size="17px" no-caps flat style="width: 100%" label="Alarmes"></q-btn>
+          <q-btn icon="calendar_today" to="/consultas" align="left" size="17px" no-caps flat style="width: 100%" label="Consultas"></q-btn>
+          <q-btn icon="local_hospital" to="remedios" align="left" size="17px" no-caps flat style="width: 100%" label="Remédios"></q-btn>
+          <q-btn icon="control_point" to="hemoglobina" align="left" size="17px" no-caps flat style="width: 100%" label="Hemoglobina"></q-btn>
+          <q-btn icon="far fa-user" to="usuario" align="left" size="17px" no-caps flat style="width: 100%" label="Usuário"></q-btn>
+        </div>
+        <div style="bottom: 0; position: fixed; width: 100%;">
+          <q-btn color="secondary" style="width: 100%;" to="/" @click="window.localStorage.clear('token')">Sair</q-btn>
+        </div>
       </q-layout-drawer>
   </q-layout>
 </transition>
@@ -81,9 +104,15 @@ export default {
       ]
     }
   },
+  created () {
+    this.$store.dispatch('getUsuario')
+  },
   computed: {
     getHemoglobina () {
       return this.$store.getters.getHemoglobinas
+    },
+    getUsuario () {
+      return this.$store.getters.getUsuario
     }
   },
   methods: {

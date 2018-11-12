@@ -15,7 +15,7 @@ module.exports = function (ctx) {
       'material-icons' // optional, you are not bound to it
       // 'ionicons',
       // 'mdi',
-      // 'fontawesome'
+      'fontawesome'
     ],
     supportIE: true,
     build: {

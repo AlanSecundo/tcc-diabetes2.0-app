@@ -22,7 +22,7 @@ export default {
         }).catch(err => {
           console.log(err)
           Notify.create({
-            message: err.response.data.error,
+            message: 'Usuário inexistente, confira seu usuário e senha',
             type: 'negative',
             position: 'top'
           })

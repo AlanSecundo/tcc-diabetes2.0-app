@@ -8,7 +8,7 @@
         <img src="../assets/logo.png" height="50vh" width="70vw">
       </div>
       <div>
-        <q-btn flat style="color: blue;" icon="keyboard_backspace" to="/"/>
+        <q-btn flat style="color: blue;" icon="" to="/"/>
       </div>
     </div>
     <div style="margin-top: 2rem;">

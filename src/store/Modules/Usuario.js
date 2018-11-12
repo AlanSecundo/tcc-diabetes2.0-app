@@ -3,7 +3,20 @@ import { Loading, Notify } from 'quasar'
 
 /*eslint-disable */
 export default {
+  state: {
+    usuario: {}
+  },
   actions: {
+    getUsuario ({ commit }) {
+      axios.get('/api/usuario')
+      .then(res => {
+        console.log(res)
+        commit('setUsuario', res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
     postUsuario ({ dispatch }, json) {
       Loading.show()
       console.log(json)
@@ -38,7 +51,13 @@ export default {
     }
   },
   mutations: {
+    setUsuario (state, data) {
+      state.usuario = data
+    }
   },
   getters: {
+    getUsuario: (state) => {
+      return state.usuario
+    }
   }
 }
