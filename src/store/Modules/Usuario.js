@@ -7,10 +7,38 @@ export default {
     usuario: {}
   },
   actions: {
+    putUsuario ({ dispatch }, json) {
+      axios.put('/api/usuario', {
+        altura : json.altura,
+        cep : json.cep,
+        cidade : json.cidade,
+        email : json.email,
+        estado : json.estado,
+        id : {
+          value : json.id.value
+        },
+        nascimento : json.nascimento,
+        nomeCompleto : json.nomeCompleto,
+        nomeUsuario : json.nomeUsuario,
+        peso : json.peso,
+        senha : json.senha,
+        sexo : json.sexo,
+        telefone : json.telefone
+      })
+      .then(res => {
+        Notify.create({
+          message: 'Usuário cadastrado com sucesso!',
+          type: 'positive',
+          position: 'top'
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
     getUsuario ({ commit }) {
       axios.get('/api/usuario')
       .then(res => {
-        console.log(res)
         commit('setUsuario', res.data)
       })
       .catch(err => {
@@ -19,7 +47,6 @@ export default {
     },
     postUsuario ({ dispatch }, json) {
       Loading.show()
-      console.log(json)
       axios.post('/api/usuario', {
          altura : json.altura,
          cep : json.cep,

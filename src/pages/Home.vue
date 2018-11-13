@@ -12,7 +12,10 @@
       <span>Informações gerais</span>
     </div>
     <div>
-      <GChart type="LineChart" :data="chartData"/>
+      <GChart v-if="haveData" type="LineChart" :data="chartData" :options="chartOptions"/>
+      <div v-else class="text-center" style="padding: 0 15px;">
+        <h4> Não existem dados de hemoglobina {{getGlicose}} </h4>
+      </div>
     </div>
     <div>
       <q-carousel class="text-center" infinite :autoplay="5000" color="transparent" height="30vh">
@@ -62,6 +65,7 @@
           <div style="margin-top: -17%; margin-left: 7px;" >
             <span>
               <b>{{getUsuario.nomeCompleto}}</b>
+              <br>
             </span>
             <span>
               {{getUsuario.email}}
@@ -88,6 +92,8 @@
 
 <script>
 import { GChart } from 'vue-google-charts'
+
+/*eslint-disable */
 export default {
   components: {
     GChart
@@ -96,23 +102,36 @@ export default {
     return {
       drawer: false,
       size: 100,
-      chartData: [
-        ['Mês', 'Hemoglobina'],
-        ['Janeiro', 10],
-        ['Fevereiro', 50],
-        ['Março', 20]
-      ]
+      haveData: false,
+      name: 'Hemoglobina glicada',
+      chartData: [],
+      maiorData: '',
+      chartOptions: {
+        chart: {
+          title: 'Glicose'
+        },
+        legend: {position: 'none'}
+      },
+      objetoHemoglobina: {
+        valor: '',
+        dataUltimaMedicao: ''
+      }
     }
   },
   created () {
     this.$store.dispatch('getUsuario')
+    this.$store.dispatch('getGlicose')
+    this.tratarDados()
   },
   computed: {
-    getHemoglobina () {
-      return this.$store.getters.getHemoglobinas
-    },
     getUsuario () {
       return this.$store.getters.getUsuario
+    },
+    getGlicose () {
+      if (this.$store.getters.getGlicoses.length > 0) {
+        this.haveData = true
+      }
+      return this.$store.getters.getGlicoses
     }
   },
   methods: {
@@ -124,6 +143,16 @@ export default {
       } else if (this.size === 120) {
         this.size = 100
       }
+    },
+    tratarDados () {
+      let tamanho = this.getGlicose.length
+      this.maiorData = this.getGlicose[tamanho - 1].dataUltimaMedicao
+      let array = []
+      array.push(['Data', 'Valor'])
+      this.getGlicose.forEach(function (value) {
+        array.push([value.dataUltimaMedicao, value.valor])
+      })
+      this.chartData = array
     }
   }
 }

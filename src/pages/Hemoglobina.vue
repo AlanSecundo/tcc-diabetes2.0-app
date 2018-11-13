@@ -59,7 +59,8 @@ export default {
       chartOptions: {
         chart: {
           title: 'Glicose'
-        }
+        },
+        legend: {position: 'none'}
       },
       objetoHemoglobina: {
         valor: '',
